@@ -12,7 +12,7 @@ const EmptyState = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className=" text-white  font-bold text-6xl">
+      <div className=" text-white  font-bold text-center text-4xl md:text-6xl">
         Your movie list is empty
       </div>
       <div className=" w-fit mt-10">

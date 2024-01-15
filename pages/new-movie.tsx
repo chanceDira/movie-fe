@@ -102,15 +102,42 @@ const NewMovie = () => {
   return (
     <>
       <Toaster position="top-right" reverseOrder={true} />
-      <div className=" w-10/12 md:w-1/2 flex flex-col  items-center ">
-        <div className="text-white flex justify-center  md:justify-start w-full text-4xl mt-20">
+      <div className=" w-11/12 md:w-1/2 flex flex-col  items-center ">
+        <div className="text-white  flex justify-center  md:justify-start w-full text-2xl md:text-4xl mt-20">
           Create a new movie
         </div>
 
-        <div className=" mt-14 flex flex-col md:flex-row justify-between gap-4 ">
+        <div className=" mt-14 w-full flex flex-col md:flex-row justify-between gap-4 ">
+          
+        <div
+          
+            className=" md:hidden flex flex-col items-center gap-y-4"
+          >
+            <div className=" w-full">
+              <input
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                type="text"
+                placeholder="Title"
+                className=" rounded-md p-2 w-full text-white outline-none  bg-gray-500 bg-opacity-20"
+              />
+            </div>
+            <div className=" w-full">
+              <input
+                name="year"
+                value={formData.year}
+                onChange={handleInputChange}
+                type="number"
+                placeholder="Publishing year"
+                className=" w-full rounded-md p-2 text-white outline-none  bg-gray-500 bg-opacity-20"
+              />
+            </div>
+            </div>
+          
           <div
             {...getRootProps()}
-            className=" w-72 h-96 md:w-96 md:h-96 border border-dashed rounded-md flex flex-col cursor-pointer justify-center items-center bg-gray-500 bg-opacity-20"
+            className=" w-full h-96 md:w-96 md:h-96 border border-dashed rounded-md flex flex-col cursor-pointer justify-center items-center bg-gray-500 bg-opacity-20"
           >
             <input {...getInputProps()} />
             <img
@@ -118,7 +145,7 @@ const NewMovie = () => {
               alt=""
               className={`${
                 imagePreview == "" ? "hidden" : ""
-              } w-72 h-96 md:w-96 md:h-96 rounded-md`}
+              } w-full h-96 md:w-96 md:h-96 rounded-md`}
             />
 
             <div
@@ -136,7 +163,7 @@ const NewMovie = () => {
             onSubmit={handleSubmit}
             className=" flex flex-col items-center gap-y-4"
           >
-            <div>
+            <div className="hidden md:block">
               <input
                 name="title"
                 value={formData.title}
@@ -146,7 +173,7 @@ const NewMovie = () => {
                 className=" rounded-md p-2 text-white outline-none  bg-gray-500 bg-opacity-20"
               />
             </div>
-            <div>
+            <div className="hidden md:block">
               <input
                 name="year"
                 value={formData.year}
@@ -156,15 +183,15 @@ const NewMovie = () => {
                 className=" rounded-md p-2 text-white outline-none  bg-gray-500 bg-opacity-20"
               />
             </div>
-            <div className="flex flex-row gap-2 mb-40 md:mb-4 ">
+            <div className="flex w-full flex-row gap-2 mb-40 md:mb-4 ">
               <Link href="/home">
                 <div
-                  className={`border border-white text-white px-9 flex justify-center rounded-md py-2 cursor-pointer hover:opacity-70`}
+                  className={`border border-white w-full text-white px-9 flex justify-center rounded-md py-2 cursor-pointer hover:opacity-70`}
                 >
                   Cancel
                 </div>
               </Link>
-              <Primary name="Submit" style="" onClick={handleSubmit} />
+              <Primary name="Submit" style="w-full" onClick={handleSubmit} />
             </div>
           </form>
         </div>

@@ -34,7 +34,7 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
 
       <div
         key={movie._id}
-        className="cursor-pointer bg-primary_v2 w-fit p-2 rounded-md"
+        className="cursor-pointer bg-primary_v2 p-2 rounded-md w-full"
       >
         <div>
         <Link href={`/${movie?._id}`}>
@@ -51,15 +51,15 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
           <div className="flex flex-row gap-12">
             <div>
               <Link href={`/${movie?._id}`}>
-                <Icon icon="tabler:edit" color="white" width="40" height="40" />
+                <Icon icon="tabler:edit" color="white" width="20" height="20" />
               </Link>
             </div>
             <div onClick={handleDelete}>
               <Icon
                 icon="material-symbols:delete"
                 color="white"
-                width="40"
-                height="40"
+                width="20"
+                height="20"
               />
             </div>
           </div>
