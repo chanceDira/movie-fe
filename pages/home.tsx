@@ -39,7 +39,7 @@ const Home = () => {
     <div className="relative w-11/12 md:w-9/12 h-full">
       <Navbar />
 
-      <div className="mt-28 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+      <div className="mt-28 w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center">
         {loading ? (
           <div className=" text-white flex justify-center items-center">
             Loading
