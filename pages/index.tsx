@@ -9,23 +9,42 @@ import { Primary } from "../components/Button/Button";
 import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
 import Notify from "../utils/Notify";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { login } from "../redux/slices/authSlice";
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { user, error, loading } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
-    if(!email || !password) {
-      Notify('Please provide all data', 'error')
+  const handleLogin = async () => {
+    setIsLoading(true);
+    if (!email || !password) {
+      Notify("Please provide all data", "error");
       return;
     }
-    if (email === "dev@gmail.com" && password === "dev123") {
-      router.push("/home");
-    } else {
-      console.log("Invalid credentials");
+
+    try {
+      const res = await dispatch(login({ email, password }) as any);
+      setTimeout(() => {
+        if (res.payload) {
+          Notify("Logged in", "success");
+          router.push("/home");
+        } else {
+          Notify("Invalid credentials", "error");
+        }
+      }, 3000);
+      setIsLoading(false);
+    } catch (error) {
       Notify("Invalid credentials", "error");
+      setIsLoading(false);
     }
   };
 
@@ -60,7 +79,11 @@ const Home: NextPage = () => {
             <input type="checkbox" />
             <span className=" text-white ml-2 font-light">Remember me</span>
           </div>
-          <Primary name="Login" style="w-full" onClick={handleLogin} />
+          <Primary
+            name={isLoading ? "Loading" : "Login"}
+            style="w-full"
+            onClick={handleLogin}
+          />
         </form>
       </div>
     </>
