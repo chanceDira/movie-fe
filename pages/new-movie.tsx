@@ -76,6 +76,11 @@ const NewMovie = () => {
   const handleSubmit = (e: FormEvent<HTMLDivElement | HTMLFormElement>) => {
     e.preventDefault();
 
+    if(!formData.image || !formData.title || !formData.year) {
+      Notify('Please provide all data', 'error')
+      return;
+    }
+
     try {
       console.log(formData);
       setFormData({

@@ -58,11 +58,6 @@ const index = (movie: MoviePageProps) => {
       );
       console.log("img: ", newFile[0].preview);
       setImagePreview(newFile[0].preview);
-      //   setProfileImage(newFile[0].preview);
-      //   setFormData({
-      //     ...formData,
-      //     image: newFile[0].preview
-      // })
       const formDataUpload = new FormData();
       formDataUpload.append("file", newFile[0]);
       formDataUpload.append("upload_preset", "spreuke-app");
@@ -73,7 +68,6 @@ const index = (movie: MoviePageProps) => {
           formDataUpload
         )
         .then((response) => {
-          //   console.log(response.data.secure_url)
           setFormData({
             ...formData,
             image: response.data.secure_url,
@@ -94,6 +88,11 @@ const index = (movie: MoviePageProps) => {
 
   const handleSubmit = (e: FormEvent<HTMLDivElement | HTMLFormElement>) => {
     e.preventDefault();
+
+    if(!formData.image || !formData.title || !formData.year) {
+      Notify('Please provide all data', 'error')
+      return;
+    }
 
     try {
       console.log(formData);
@@ -198,7 +197,6 @@ export const getServerSideProps: GetServerSideProps<MoviePageProps> = async ({
   const { id } = query;
 
   try {
-    // Fetch the movie data from your API using the movie ID
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/movies/${id}`
     );

@@ -17,6 +17,10 @@ const Home: NextPage = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
+    if(!email || !password) {
+      Notify('Please provide all data', 'error')
+      return;
+    }
     if (email === "dev@gmail.com" && password === "dev123") {
       router.push("/home");
     } else {
