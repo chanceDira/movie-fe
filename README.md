@@ -25,6 +25,7 @@ npm run dev
 To successfully navigate the codebase of the project, you will need undertanding of the following technologies that are being used to develop this application:
 
 - NextJs
+- Redux
 - Typescript
 - Tailwindcss
 

@@ -1,12 +1,14 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Primary, Secondary } from "../components/Button/Button";
-import { useDropzone } from "react-dropzone";
 import axios from "axios";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { Toaster } from "react-hot-toast";
-import Notify from "../utils/Notify";
-import { postMovie, actions } from "../redux/slices/movieSlice";
 import { useDispatch } from "react-redux";
+import Notify from "../../utils/Notify";
 import Link from "next/link";
+import { Primary } from "../../components/Button/Button";
+import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import { updateMovie } from "../../redux/slices/movieSlice";
 
 interface FormData {
   title: string;
@@ -14,16 +16,30 @@ interface FormData {
   image: string;
 }
 
-const NewMovie = () => {
+interface Movie {
+  _id: string;
+  title: string;
+  year: number | string;
+  image: string;
+}
+
+interface MoviePageProps {
+  movie: Movie;
+}
+
+const index = (movie: MoviePageProps) => {
   const dispatch = useDispatch();
-  const [imagePreview, setImagePreview] = useState<string>("");
+  const router = useRouter();
+  const { id } = router.query;
+  const [imagePreview, setImagePreview] = useState<string>(movie?.movie?.image);
   const [formData, setFormData] = useState<FormData>({
-    title: "",
-    year: "",
-    image: "",
+    title: movie?.movie?.title,
+    year: movie?.movie?.year,
+    image: movie?.movie?.image,
   });
 
-  // Upload Image
+  console.log("movie: ", movie.movie);
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/*": [".jpeg", ".png", ".jpg"],
@@ -42,6 +58,11 @@ const NewMovie = () => {
       );
       console.log("img: ", newFile[0].preview);
       setImagePreview(newFile[0].preview);
+      //   setProfileImage(newFile[0].preview);
+      //   setFormData({
+      //     ...formData,
+      //     image: newFile[0].preview
+      // })
       const formDataUpload = new FormData();
       formDataUpload.append("file", newFile[0]);
       formDataUpload.append("upload_preset", "spreuke-app");
@@ -76,17 +97,22 @@ const NewMovie = () => {
 
     try {
       console.log(formData);
+      const updatedMovieData = {
+        id: id as string,
+        movie: formData,
+      };
+
+      dispatch(updateMovie(updatedMovieData) as any);
       setFormData({
         title: "",
         year: "",
         image: "",
       });
-      dispatch(postMovie(formData) as any);
-      Notify("Movie added", "success");
+      Notify("Movie updated", "success");
     } catch (e) {
       Notify("Something went wrong !!", "error");
     }
-    
+    // Do something with formData, for example, send it to an API
   };
 
   return (
@@ -94,7 +120,7 @@ const NewMovie = () => {
       <Toaster position="top-right" reverseOrder={true} />
       <div className=" w-10/12 md:w-1/2 flex flex-col  items-center ">
         <div className="text-white flex justify-center  md:justify-start w-full text-4xl mt-20">
-          Create a new movie
+          Edit a new movie
         </div>
 
         <div className=" mt-14 flex flex-col md:flex-row justify-between gap-4 ">
@@ -154,7 +180,7 @@ const NewMovie = () => {
                   Cancel
                 </div>
               </Link>
-              <Primary name="Submit" style="" onClick={handleSubmit} />
+              <Primary name="Update" style="" onClick={handleSubmit} />
             </div>
           </form>
         </div>
@@ -163,4 +189,29 @@ const NewMovie = () => {
   );
 };
 
-export default NewMovie;
+export const getServerSideProps: GetServerSideProps<MoviePageProps> = async ({
+  query,
+}) => {
+  const { id } = query;
+
+  try {
+    // Fetch the movie data from your API using the movie ID
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/movies/${id}`
+    );
+    const movie = await response.json();
+
+    return {
+      props: {
+        movie,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching movie:", error);
+    return {
+      notFound: true,
+    };
+  }
+};
+
+export default index;

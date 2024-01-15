@@ -1,14 +1,66 @@
 import React from "react";
+import { Icon } from "@iconify/react";
+import { useDispatch } from "react-redux";
+import { deleteMovie } from "../../redux/slices/movieSlice";
+import Notify from "../../utils/Notify";
+import { Toaster } from "react-hot-toast";
+import Link from "next/link";
 
-const MovieCard = () => {
+interface Movie {
+  _id: string;
+  title: string;
+  year: number | string;
+  image: string;
+}
+
+const MovieCard = ({ movie }: { movie: Movie }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    try {
+      dispatch(deleteMovie(movie?._id) as any);
+      Notify("Movie deleted", "success");
+    } catch (e) {
+      Notify("Something went wrong !!", "error");
+    }
+  };
+
   return (
-    <div className=" cursor-pointer bg-primary_v2 w-fit p-2 rounded-md">
-      <div>
-        <img src="test-image.png" alt="" />
+    <>
+      <Toaster position="top-right" reverseOrder={true} />
+
+      <div
+        key={movie._id}
+        className="cursor-pointer bg-primary_v2 w-fit p-2 rounded-md"
+      >
+        <div>
+          <img
+            src={movie.image}
+            alt={movie.title}
+            className="rounded-md w-full h-auto md:w-48 md:h-64 lg:w-64 lg:h-80"
+          />
+        </div>
+        <div className="text-white text-xl my-4">{movie.title}</div>
+        <div className="text-white font-light flex flex-row items-center justify-between">
+          <div>{movie.year}</div>
+          <div className="flex flex-row gap-2">
+            <div>
+              <Link href={`/${movie?._id}`}>
+                <Icon icon="tabler:edit" color="white" width="24" height="24" />
+              </Link>
+            </div>
+            <div onClick={handleDelete}>
+              <Icon
+                icon="material-symbols:delete"
+                color="white"
+                width="24"
+                height="24"
+              />
+            </div>
+          </div>
+        </div>
       </div>
-      <div className=" text-white text-xl my-4">title</div>
-      <div className=" text-white font-light">2021</div>
-    </div>
+    </>
   );
 };
 
