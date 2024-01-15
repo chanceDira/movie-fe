@@ -26,11 +26,13 @@ const Home = () => {
     dispatch(fetchMovies() as any);
   }, [dispatch]);
   useEffect(() => {
-    if (!loading) {
-      if(movies.length == 0) {
-        router.push("/empty-state");
+    setTimeout(() => {
+      if (!loading) {
+        if(movies.length == 0) {
+          router.push("/empty-state");
+        }
       }
-    }
+    }, 4000)
   }, [loading, error, movies, router])
 
   return (
