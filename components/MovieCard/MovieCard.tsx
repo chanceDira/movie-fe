@@ -37,27 +37,29 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
         className="cursor-pointer bg-primary_v2 w-fit p-2 rounded-md"
       >
         <div>
+        <Link href={`/${movie?._id}`}>
           <img
             src={movie.image}
             alt={movie.title}
             className="rounded-md w-full h-auto md:w-48 md:h-64 lg:w-64 lg:h-80"
-          />
+            />
+        </Link>
         </div>
         <div className="text-white text-xl my-4">{movie.title}</div>
         <div className="text-white font-light flex flex-row items-center justify-between">
           <div>{movie.year}</div>
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-12">
             <div>
               <Link href={`/${movie?._id}`}>
-                <Icon icon="tabler:edit" color="white" width="24" height="24" />
+                <Icon icon="tabler:edit" color="white" width="40" height="40" />
               </Link>
             </div>
             <div onClick={handleDelete}>
               <Icon
                 icon="material-symbols:delete"
                 color="white"
-                width="24"
-                height="24"
+                width="40"
+                height="40"
               />
             </div>
           </div>
