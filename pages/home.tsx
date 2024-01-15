@@ -25,6 +25,7 @@ const Home = () => {
   const error = useSelector((state: RootState) => state.movies.error);
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchMovie, setSearchMovie] = useState("");
 
   useEffect(() => {
     dispatch(fetchMovies() as any);
@@ -42,23 +43,47 @@ const Home = () => {
   const totalPages = Math.ceil(movies.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentMovies = movies.slice(startIndex, endIndex);
+
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchMovie.toLowerCase())
+  );
+
+  const currentMovies = filteredMovies.slice(startIndex, endIndex);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchMovie(e.target.value);
+    setCurrentPage(1);
   };
 
   return (
     <div className="relative w-11/12 md:w-9/12 h-full">
       <Navbar />
 
-      <div className="mt-28 w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center ">
+      <div className=" mt-24 flex justify-start mb-4">
+        <input
+          type="text"
+          placeholder="Search movies..."
+          className="rounded-md p-2 text-white outline-none bg-gray-500 bg-opacity-20"
+          value={searchMovie}
+          onChange={handleSearch}
+        />
+      </div>
+
+      <div className=" w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center ">
         {loading ? (
           <div className=" text-white flex justify-center items-center">
             Loading
           </div>
         ) : (
           ""
+        )}
+
+        {filteredMovies.length === 0 && !loading && (
+          <div className="text-white text-center">Movie not found</div>
         )}
 
         {currentMovies.map((movie: Movie) => (
