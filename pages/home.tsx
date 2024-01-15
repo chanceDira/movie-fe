@@ -32,13 +32,12 @@ const Home = () => {
   useEffect(() => {
     setTimeout(() => {
       if (!loading) {
-        if(movies.length == 0) {
+        if (movies.length == 0) {
           router.push("/empty-state");
         }
       }
-    }, 4000)
-  }, [loading, error, movies, router])
-
+    }, 4000);
+  }, [loading, error, movies, router]);
 
   const totalPages = Math.ceil(movies.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -62,7 +61,7 @@ const Home = () => {
           ""
         )}
 
-{currentMovies.map((movie: Movie) => (
+        {currentMovies.map((movie: Movie) => (
           <MovieCard movie={movie} key={movie._id} />
         ))}
       </div>
@@ -81,7 +80,6 @@ const Home = () => {
           )
         )}
       </div>
-
     </div>
   );
 };
