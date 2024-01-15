@@ -175,7 +175,7 @@ const index = (movie: MoviePageProps) => {
                 className=" rounded-md p-2 text-white outline-none  bg-gray-500 bg-opacity-20"
               />
             </div>
-            <div className="flex flex-row gap-2 ">
+            <div className="flex flex-row gap-2 mb-40 md:mb-4">
               <Link href="/home">
                 <div
                   className={`border border-white text-white px-9 flex justify-center rounded-md py-2 cursor-pointer hover:opacity-70`}
