@@ -109,6 +109,9 @@ const index = (movie: MoviePageProps) => {
         image: "",
       });
       Notify("Movie updated", "success");
+      setTimeout(() => {
+        router.push("/home");
+      }, 3000)
     } catch (e) {
       Notify("Something went wrong !!", "error");
     }

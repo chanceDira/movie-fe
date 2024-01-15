@@ -20,6 +20,9 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
     try {
       dispatch(deleteMovie(movie?._id) as any);
       Notify("Movie deleted", "success");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000)
     } catch (e) {
       Notify("Something went wrong !!", "error");
     }

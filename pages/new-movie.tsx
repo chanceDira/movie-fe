@@ -7,6 +7,7 @@ import Notify from "../utils/Notify";
 import { postMovie, actions } from "../redux/slices/movieSlice";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface FormData {
   title: string;
@@ -16,6 +17,7 @@ interface FormData {
 
 const NewMovie = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [imagePreview, setImagePreview] = useState<string>("");
   const [formData, setFormData] = useState<FormData>({
     title: "",
@@ -83,6 +85,9 @@ const NewMovie = () => {
       });
       dispatch(postMovie(formData) as any);
       Notify("Movie added", "success");
+      setTimeout(() => {
+        router.push("/home");
+      }, 3000)
     } catch (e) {
       Notify("Something went wrong !!", "error");
     }
