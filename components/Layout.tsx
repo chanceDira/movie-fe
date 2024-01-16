@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import Navbar from "./navbar/Navbar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,13 +16,11 @@ export default function Layout({ children }: LayoutProps) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Navbar /> */}
       <main className="relative flex justify-center  bg-primary min-h-screen">
         {children}
 
         <img src="Vectors.png" className=" absolute bottom-0 w-full h-20" />
       </main>
-      {/* <Footer /> */}
     </div>
   );
 }
