@@ -13,7 +13,7 @@ export default function Layout({ children }: LayoutProps) {
         <title>Movie app</title>
         <meta
           name="description"
-          content="Statistic using Next.js and GraphQL"
+          content="Movie app store"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
