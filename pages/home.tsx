@@ -13,6 +13,7 @@ interface Movie {
   title: string;
   year: number | string;
   image: string;
+  createdAt: string
 }
 
 const ITEMS_PER_PAGE = 4;
@@ -44,7 +45,17 @@ const Home = () => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
-  const filteredMovies = movies.filter((movie) =>
+
+  const sortedMovies = [...movies].sort((a, b) => {
+    const dateA = new Date(a.createdAt).getTime();
+    const dateB = new Date(b.createdAt).getTime();
+  
+    return dateB - dateA;
+  });
+  console.log('movies: ', movies)
+  console.log('sortedMovies: ', sortedMovies)
+
+  const filteredMovies = sortedMovies.filter((movie) =>
     movie.title.toLowerCase().includes(searchMovie.toLowerCase())
   );
 

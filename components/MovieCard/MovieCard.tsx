@@ -5,12 +5,14 @@ import { deleteMovie } from "../../redux/slices/movieSlice";
 import Notify from "../../utils/Notify";
 import { Toaster } from "react-hot-toast";
 import Link from "next/link";
+import moment from "moment";
 
 interface Movie {
   _id: string;
   title: string;
   year: number | string;
   image: string;
+  createdAt: string;
 }
 
 const MovieCard = ({ movie }: { movie: Movie }) => {
@@ -22,7 +24,7 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
       Notify("Movie deleted", "success");
       setTimeout(() => {
         window.location.reload();
-      }, 2000)
+      }, 2000);
     } catch (e) {
       Notify("Something went wrong !!", "error");
     }
@@ -34,18 +36,18 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
 
       <div
         key={movie._id}
-        className="cursor-pointer bg-primary_v2 p-2 rounded-md w-full"
+        className="cursor-pointer flex flex-col bg-primary_v2 p-2 rounded-md w-full"
       >
         <div>
-        <Link href={`/${movie?._id}`}>
-          <img
-            src={movie.image}
-            alt={movie.title}
-            className="rounded-md w-full h-auto md:w-full md:h-96 lg:w-full lg:h-96 object-cover"
+          <Link href={`/${movie?._id}`}>
+            <img
+              src={movie.image}
+              alt={movie.title}
+              className="rounded-md w-full h-auto md:w-full md:h-96 lg:w-full lg:h-96 object-cover"
             />
-        </Link>
+          </Link>
         </div>
-        <div className="text-white text-xl my-4">{movie.title}</div>
+        <div className="text-white text-xl my-2">{movie.title}</div>
         <div className="text-white font-light flex flex-row items-center justify-between">
           <div>{movie.year}</div>
           <div className="flex flex-row gap-12">
@@ -63,6 +65,9 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
               />
             </div>
           </div>
+        </div>
+        <div className=" text-teal-100 font-light text-xs">
+          Added {moment(movie.createdAt).fromNow()}
         </div>
       </div>
     </>

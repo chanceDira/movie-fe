@@ -8,6 +8,7 @@ interface Movie {
   title: string;
   year: number | string;
   image: string;
+  createdAt: string;
 }
 
 interface MovieV2 {
