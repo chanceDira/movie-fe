@@ -63,7 +63,7 @@ const Home = () => {
     <div className="relative w-11/12 md:w-9/12 h-full">
       <Navbar />
 
-      <div className=" mt-24 flex justify-start mb-4">
+      <div className=" mt-24 md:mt-32 flex justify-start mb-4">
         <input
           type="text"
           placeholder="Search movies..."
@@ -90,7 +90,7 @@ const Home = () => {
           <MovieCard movie={movie} key={movie._id} />
         ))}
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 mb-10 md:mb-40">
         {Array.from({ length: totalPages }, (_, index) => index + 1).map(
           (page) => (
             <button
