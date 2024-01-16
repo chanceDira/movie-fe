@@ -161,7 +161,7 @@ const index = (movie: MoviePageProps) => {
               alt=""
               className={`${
                 imagePreview == "" ? "hidden" : ""
-              } w-full h-96 md:w-96 md:h-96 rounded-md`}
+              } w-full h-96 md:w-full md:h-96 rounded-md object-cover`}
             />
 
             <div

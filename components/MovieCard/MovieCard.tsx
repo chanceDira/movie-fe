@@ -41,7 +41,7 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
           <img
             src={movie.image}
             alt={movie.title}
-            className="rounded-md w-full h-auto md:w-48 md:h-64 lg:w-64 lg:h-80"
+            className="rounded-md w-full h-auto md:w-full md:h-96 lg:w-full lg:h-96 object-cover"
             />
         </Link>
         </div>
