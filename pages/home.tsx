@@ -13,10 +13,10 @@ interface Movie {
   title: string;
   year: number | string;
   image: string;
-  createdAt: string
+  createdAt: string;
 }
 
-const ITEMS_PER_PAGE = 4;
+const ITEMS_PER_PAGE = 8;
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -45,15 +45,12 @@ const Home = () => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
-
   const sortedMovies = [...movies].sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();
     const dateB = new Date(b.createdAt).getTime();
-  
+
     return dateB - dateA;
   });
-  console.log('movies: ', movies)
-  console.log('sortedMovies: ', sortedMovies)
 
   const filteredMovies = sortedMovies.filter((movie) =>
     movie.title.toLowerCase().includes(searchMovie.toLowerCase())
@@ -63,6 +60,18 @@ const Home = () => {
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,12 +111,19 @@ const Home = () => {
         ))}
       </div>
       <div className="flex justify-center mt-4 mb-10 md:mb-40">
+        <button
+          className="mx-2 px-4 py-2 font-bold text-white disabled:cursor-not-allowed rounded-md mb-40 md:mb-4"
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
         {Array.from({ length: totalPages }, (_, index) => index + 1).map(
           (page) => (
             <button
               key={page}
               className={`mx-2 px-4 py-2 bg-primary_v2 text-white rounded-md mb-40 md:mb-4 ${
-                page === currentPage ? "bg-opacity-80" : "bg-opacity-40"
+                page === currentPage ? "bg-secondary" : "bg-opacity-80"
               }`}
               onClick={() => handlePageChange(page)}
             >
@@ -115,6 +131,13 @@ const Home = () => {
             </button>
           )
         )}
+        <button
+          className="mx-2 px-4 py-2 font-bold text-white disabled:cursor-not-allowed rounded-md mb-40 md:mb-4"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
