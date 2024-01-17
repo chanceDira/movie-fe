@@ -25,8 +25,17 @@ const initialState: AuthState = {
 export const login: AsyncThunk<any, { email: string; password: string }, {}> = createAsyncThunk(
   'auth/login',
   async ({ email, password }) => {
-    
+
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, { email, password });
+    return response.data;
+  }
+);
+
+export const signup: AsyncThunk<any, { name: string, email: string; password: string, role: string }, {}> = createAsyncThunk(
+  'auth/signup',
+  async ({ name, email, password, role }) => {
+
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/signup`, { name, email, password, role });
     return response.data;
   }
 );

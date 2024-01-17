@@ -18,7 +18,6 @@ export default function Layout({ children }: LayoutProps) {
       </Head>
       <main className="relative flex justify-center  bg-primary min-h-screen">
         {children}
-
         <img src="Vectors.png" className=" absolute bottom-0 w-full h-20" />
       </main>
     </div>
